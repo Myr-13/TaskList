@@ -59,3 +59,26 @@ async def test_delete_task(database):
 	res = test_client.get("/tasks/list", headers={"Authorization": f"Bearer {test_token}"})
 	assert res.status_code == 200
 	assert len(res.json()["tasks"]) == 0
+
+
+@pytest.mark.asyncio
+async def test_edit_task(database):
+	res = test_client.post("/tasks/create", headers={"Authorization": f"Bearer {test_token}"}, json={
+		"title": "testing",
+		"description": "testing_description",
+		"status": "pending"
+	})
+	assert res.status_code == 200
+	task_id = res.json()["id"]
+
+	res = test_client.patch("/tasks/edit", headers={"Authorization": f"Bearer {test_token}"}, params={
+		"task_id": task_id
+	}, json={
+		"field": "title",
+		"value": "test"
+	})
+	assert res.status_code == 200
+
+	res = test_client.get("/tasks/list", headers={"Authorization": f"Bearer {test_token}"})
+	assert res.status_code == 200
+	assert res.json()["tasks"][0]["title"] == "test"
