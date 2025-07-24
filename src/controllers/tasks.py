@@ -1,3 +1,5 @@
+from datetime import datetime, UTC
+
 from fastapi import HTTPException
 from sqlalchemy import select, func, Result
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -8,7 +10,7 @@ from src.models.database import Task
 from src.base.database import get_session_maker
 
 
-async def create(*, title: str, description: str, status: TaskStatus) -> None:
+async def create(*, title: str, description: str, status: TaskStatus) -> int:
 	async with get_session_maker()() as session:
 		session: AsyncSession
 
@@ -22,10 +24,13 @@ async def create(*, title: str, description: str, status: TaskStatus) -> None:
 		task = Task(
 			title=title,
 			description=description,
-			status=status
+			status=status,
+			time_created=datetime.now(UTC),
 		)
 		session.add(task)
 		await session.commit()
+		await session.refresh(task)
+		return task.id
 
 
 async def get_list(*, status: TaskStatus | None) -> list[TaskObject]:

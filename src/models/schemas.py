@@ -33,6 +33,10 @@ class TaskCreateRequest(BaseModel):
 	status: TaskStatus
 
 
+class TaskCreateResponse(BaseModel):
+	id: int
+
+
 class TaskListResponse(BaseModel):
 	tasks: list[TaskObject]
 

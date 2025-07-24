@@ -25,3 +25,14 @@ async def initialize_db(user: str, password: str, ip: str, database_name: str) -
 
 def get_session_maker() -> async_sessionmaker:
 	return _session_maker
+
+
+async def initialize_test_db() -> None:
+	global _session_maker
+
+	url: str = f"sqlite+aiosqlite:///:memory:"
+	engine = create_async_engine(url)
+	_session_maker = async_sessionmaker(bind=engine, class_=AsyncSession, autocommit=False, autoflush=False)
+
+	async with engine.begin() as conn:
+		await conn.run_sync(Base.metadata.create_all)
