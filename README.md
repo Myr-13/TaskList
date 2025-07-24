@@ -6,3 +6,5 @@ DATABASE_PASSWORD=password
 DATABASE_NAME=database_name
 JWT_TOKEN_SECRET=my_secret
 ```
+
+**SwaggerUI доступен на endpoint'e `/docs`**
