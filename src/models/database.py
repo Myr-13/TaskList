@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, func
 
 from src.base.database import Base
 
@@ -18,4 +18,4 @@ class Task(Base):
 	title = Column(String, nullable=False)
 	description = Column(String, nullable=False)
 	status = Column(String, nullable=False)
-	time_created = Column(DateTime, nullable=False, server_default="CURRENT_TIMESTAMP")
+	time_created = Column(DateTime, nullable=False, server_default=func.current_timestamp())

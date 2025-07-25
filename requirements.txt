@@ -5,6 +5,7 @@ SQLAlchemy[asyncio]~=2.0.41
 pydantic~=2.11.7
 asyncpg~=0.30.0
 python-decouple~=3.8
+alembic~=1.16.4
 # Testing
 pytest~=8.4.1
 pytest-asyncio~=1.1.0

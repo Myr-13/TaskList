@@ -22,6 +22,9 @@ async def initialize_db(user: str, password: str, ip: str, database_name: str) -
 		logging.info("Connected to database")
 		logging.info(f"* Server version: {'.'.join(server_version)}")
 
+		async with engine.begin() as conn:
+			await conn.run_sync(Base.metadata.create_all)
+
 
 def get_session_maker() -> async_sessionmaker:
 	return _session_maker
