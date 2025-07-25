@@ -5,6 +5,7 @@
 - FastAPI
 - Pydantic
 - SQLAlchemy
+- Alembic
 - PostgreSQL
 - Python-jose
 - Python-decouple
